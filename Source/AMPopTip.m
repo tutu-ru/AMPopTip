@@ -28,7 +28,6 @@
 @property (nonatomic, assign, readwrite) BOOL isVisible;
 @property (nonatomic, assign, readwrite) BOOL isAnimating;
 @property (nonatomic, assign) CGRect textBounds;
-@property (nonatomic, assign) CGFloat maxWidth;
 @property (nonatomic, strong) UIView *customView;
 
 @end
@@ -279,6 +278,23 @@
     } else if (self.attributedText != nil) {
         [self.attributedText drawInRect:self.textBounds];
     }
+}
+
+- (void)forceShow {
+    self.isAnimating = YES;
+    [self setNeedsLayout];
+    [self performEntranceAnimation:^{
+        [self.containerView addGestureRecognizer:self.tapRemoveGesture];
+        [self.containerView addGestureRecognizer:self.swipeRemoveGesture];
+        if (self.appearHandler) {
+            self.appearHandler();
+        }
+        if (self.actionAnimation != AMPopTipActionAnimationNone) {
+            [self startActionAnimation];
+        }
+        self.isVisible = YES;
+        self.isAnimating = NO;
+    }];
 }
 
 - (void)show {

@@ -93,6 +93,9 @@ typedef NS_ENUM(NSInteger, AMPopTipActionAnimation) {
  */
 + (instancetype)popTip;
 
+// Show without check
+- (void)forceShow;
+
 /** Show the popover
  *
  * Shows an animated popover in a given view, from a given rectangle.
@@ -460,5 +463,11 @@ typedef NS_ENUM(NSInteger, AMPopTipActionAnimation) {
  * The direction from which the poptip is shown. Read only.
  */
 @property (nonatomic, assign, readonly) AMPopTipDirection direction;
+
+/** MaxWidth
+ *
+ * The maximum width of the popover. If the popover won't fit in the given space, this will be overridden.
+ */
+@property (nonatomic, assign) CGFloat maxWidth;
 
 @end
